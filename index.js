@@ -13,6 +13,27 @@ const pool = new Pool({
 });
 app.use(express.json());
 
+
+//Rota que obtem todos os herois
+app.get('/heroi', async (req, res) => {
+    try {
+        const resultado = await pool.query('SELECT * FROM heroi');
+        res.json({
+            total: resultado.rowCount,
+            heroi: resultado.rows,
+        });
+    } catch (error) {
+        console.error('Erro ao obter herois', error);
+        res.status(500).json({ message: 'Erro ao obter os herois' });
+    }
+});
+
+
+
+app.get('/', (req, res) => {
+    res.send('A rota está funcionando! ✨💋');
+  });
+
 // Iniciar o servidor
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT} monstrinha do meu coração! 💋`);
