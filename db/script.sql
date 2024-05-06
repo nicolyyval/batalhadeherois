@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS heroi (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     poder VARCHAR(255) NOT NULL,
-    lever INTEGER NOT NULL,
+    level INTEGER NOT NULL,
     hp INTEGER NOT NULL,
 );
 
@@ -22,28 +22,28 @@ CREATE TABLE IF NOT EXISTS batalha (
 
 -- inserir herois da monster high
 
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Draculaura', 'Vampira', 5, 600);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Frankie Stein', 'Eletricidade', 6, 210);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Clawdeen Wolf', 'Lobisomem', 4, 109);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Cleo de Nile', 'Múmia', 9, 900);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Lagoona Blue', 'Sereia', 1, 160);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Ghoulia Yelps', 'Zumbi', 1, 100);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Deuce Gorgon', 'Medusa', 4, 400);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Toralei Stripe', 'Gata', 2, 250);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Abbey Bominable', 'Abominável', 4, 100);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Spectra Vondergeist', 'Fantasma', 4, 150);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Operetta', 'Fantasma', 2, 100);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Nefera de Nile', 'Múmia', 5, 200);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Holt Hyde', 'Monstro', 3, 300);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Jackson Jekyll', 'Monstro', 1, 110);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Rochelle Goyle', 'Gárgula', 1, 260);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Robecca Steam', 'Robô', 1, 120);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Venus McFlytrap', 'Planta', 3, 150);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Catty Noir', 'Gata', 1, 140);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Twyla', 'Monstro', 1, 140);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Skelita Calaveras', 'Esqueleto', 1, 100);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Jinafire Long', 'Dragão', 1, 340);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Catrine DeMew', 'Gata', 1, 210);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Gigi Grant', 'Gênio', 4, 107);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Amanita Nightshade', 'Planta', 6, 100);
-INSERT INTO heroi (nome, poder, lever, hp) VALUES ('Elissabat', 'Vampira', 2, 180);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Draculaura', 'Vampira', 5, 600);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Frankie Stein', 'Eletricidade', 6, 210);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Clawdeen Wolf', 'Lobisomem', 4, 109);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Cleo de Nile', 'Múmia', 9, 900);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Lagoona Blue', 'Sereia', 1, 160);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Ghoulia Yelps', 'Zumbi', 1, 100);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Deuce Gorgon', 'Medusa', 4, 400);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Toralei Stripe', 'Gata', 2, 250);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Abbey Bominable', 'Abominável', 4, 100);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Spectra Vondergeist', 'Fantasma', 4, 150);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Operetta', 'Fantasma', 2, 100);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Nefera de Nile', 'Múmia', 5, 200);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Holt Hyde', 'Monstro', 3, 300);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Jackson Jekyll', 'Monstro', 1, 110);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Rochelle Goyle', 'Gárgula', 1, 260);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Robecca Steam', 'Robô', 1, 120);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Venus McFlytrap', 'Planta', 3, 150);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Catty Noir', 'Gata', 1, 140);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Twyla', 'Monstro', 1, 140);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Skelita Calaveras', 'Esqueleto', 1, 100);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Jinafire Long', 'Dragão', 1, 340);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Catrine DeMew', 'Gata', 1, 210);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Gigi Grant', 'Gênio', 4, 107);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Amanita Nightshade', 'Planta', 6, 100);
+INSERT INTO heroi (nome, poder, level, hp) VALUES ('Elissabat', 'Vampira', 2, 180);
