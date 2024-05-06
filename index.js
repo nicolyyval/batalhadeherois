@@ -83,6 +83,27 @@ app.delete('/heroi/:id', async (req, res) => {
     }
 });
 
+//Implementação de uma rota que permita simular uma batalha entre dois heróis.
+app.post('/batalha', async (req, res) => {
+    const { id1, id2 } = req.body;
+    try {
+        const resultado1 = await pool.query('SELECT * FROM heroi WHERE id = $1', [id1]);
+        const resultado2 = await pool.query('SELECT * FROM heroi WHERE id = $1', [id2]);
+        const heroi1 = resultado1.rows[0];
+        const heroi2 = resultado2.rows[0];
+        let vencedor = null;
+        if (heroi1.hp > heroi2.hp) {
+            vencedor = heroi1;
+        } else if (heroi2.hp > heroi1.hp) {
+            vencedor = heroi2;
+        }
+        res.json({ vencedor });
+    } catch (error) {
+        console.error('Erro ao simular batalha', error);
+        res.status(500).json({ message: 'Erro ao simular batalha' });
+    }
+}
+);
 
 app.get('/', (req, res) => {
     res.send('A rota está funcionando! ✨💋');
