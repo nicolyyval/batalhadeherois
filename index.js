@@ -12,3 +12,8 @@ const pool = new Pool({
     port: 7007,
 });
 app.use(express.json());
+
+// Iniciar o servidor
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT} monstrinha do meu coração! 💋`);
+});
