@@ -119,7 +119,6 @@ app.get('/batalha/:id_heroi_1/:id_heroi_2', async (req, res) => {
     }
 });
 
-//Rota que obtem o historico de batalhas de um heroi
 app.get('/batalha/heroi/:id', async (req, res) => {
     const { id } = req.params;
     try {
