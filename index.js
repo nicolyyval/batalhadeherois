@@ -133,6 +133,18 @@ app.get('/batalha/heroi/:id', async (req, res) => {
     }
 });
 
+//histórico de batalhas com os dados dos heróis envolvidos.
+app.get('/batalha/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const resultado = await pool.query('SELECT * FROM batalha WHERE id = $1', [id]);
+        res.json(resultado.rows[0]);
+    } catch (error) {
+        console.error('Erro ao obter batalha', error);
+        res.status(500).json({ message: 'Erro ao obter batalha' });
+    }
+});
+
 //Rota que obtem todas as batalhas
 app.get('/batalha', async (req, res) => {
     try {
