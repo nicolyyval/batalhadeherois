@@ -94,7 +94,27 @@ app.delete('/heroi/:id', async (req, res) => {
     }
 });
 
-//Rota de batalha entre dois herois
+//Rota de batalha entre dois herois por get, onde eu coloco o id1 e id2 na url e ele me retorna o vencedor que tem maior hp ou nivel
+app.get('/batalha', async (req, res) => {
+    const { id1, id2 } = req.query;
+    try {
+        const resultado1 = await pool.query('SELECT * FROM heroi WHERE id = $1', [id1]);
+        const resultado2 = await pool.query('SELECT * FROM heroi WHERE id = $1', [id2]);
+        const heroi1 = resultado1.rows[0];
+        const heroi2 = resultado2.rows[0];
+        let vencedor = null;
+        if (heroi1.hp > heroi2.hp) {
+            vencedor = heroi1;
+        } else if (heroi2.hp > heroi1.hp) {
+            vencedor = heroi2;
+        }
+        res.json({ vencedor });
+    } catch (error) {
+        console.error('Erro ao batalhar', error);
+        res.status(500).json({ message: 'Erro ao batalhar' });
+    }
+});
+
 app.post('/batalha', async (req, res) => {
     const { id1, id2 } = req.body;
     try {
@@ -116,25 +136,11 @@ app.post('/batalha', async (req, res) => {
     }
 });
 
-//obter o histórico de batalhas com os dados dos heróis envolvidos.
+//obter o histórico de batalhas com os dados dos heróis envolvidos utilizando o join para relacionar as tabelas
 app.get('/historico', async (req, res) => {
     try {
-        const resultado = await pool.query('SELECT * FROM batalha');
-        const historico = [];
-        for (const batalha of resultado.rows) {
-            const resultado1 = await pool.query('SELECT * FROM heroi WHERE id = $1', [batalha.id1]);
-            const resultado2 = await pool.query('SELECT * FROM heroi WHERE id = $1', [batalha.id2]);
-            const heroi1 = resultado1.rows[0];
-            const heroi2 = resultado2.rows[0];
-            const vencedor = batalha.vencedor ? await pool.query('SELECT * FROM heroi WHERE id = $1', [batalha.vencedor]) : null;
-            historico.push({
-                id: batalha.id,
-                heroi1,
-                heroi2,
-                vencedor: vencedor ? vencedor.rows[0] : null,
-            });
-        }
-        res.json(historico);
+        const resultado = await pool.query('SELECT batalha.id, batalha.id1, batalha.id2, batalha.vencedor, heroi.nome AS nome_vencedor, heroi.poder AS poder_vencedor, heroi.level AS level_vencedor, heroi.hp AS hp_vencedor FROM batalha JOIN heroi ON batalha.vencedor = heroi.id');
+        res.json(resultado.rows);
     } catch (error) {
         console.error('Erro ao obter historico', error);
         res.status(500).json({ message: 'Erro ao obter historico' });
@@ -155,12 +161,15 @@ app.get('/batalha', async (req, res) => {
     }
 });
 
-//Buscar batalhar por herói
-app.get('/batalha/:id', async (req, res) => {
+//Buscar batalhas por heroi
+app.get('/batalha/heroi/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const resultado = await pool.query('SELECT * FROM batalha WHERE id1 = $1 OR id2 = $1', [id]);
-        res.json(resultado.rows);
+        res.json({
+            total: resultado.rowCount,
+            batalha: resultado.rows,
+        });
     } catch (error) {
         console.error('Erro ao obter batalhas', error);
         res.status(500).json({ message: 'Erro ao obter as batalhas' });
