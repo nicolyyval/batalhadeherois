@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS batalha (
     id SERIAL PRIMARY KEY,
     id_heroi_1 INTEGER NOT NULL,
     id_heroi_2 INTEGER NOT NULL,
-    vencedor INTEGER NOT NULL,
+    vencedor INTEGER,
     FOREIGN KEY (id_heroi_1) REFERENCES heroi(id),
     FOREIGN KEY (id_heroi_2) REFERENCES heroi(id),
     FOREIGN KEY (vencedor) REFERENCES heroi(id)
