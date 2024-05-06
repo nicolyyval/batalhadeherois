@@ -83,7 +83,7 @@ app.delete('/heroi/:id', async (req, res) => {
     }
 });
 
-//Implementação de uma rota que permita simular uma batalha entre dois heróis.
+//Rota de batalha entre dois herois
 app.post('/batalha', async (req, res) => {
     const { id1, id2 } = req.body;
     try {
@@ -97,13 +97,39 @@ app.post('/batalha', async (req, res) => {
         } else if (heroi2.hp > heroi1.hp) {
             vencedor = heroi2;
         }
+        await pool.query('INSERT INTO batalha (id1, id2, vencedor) VALUES ($1, $2, $3)', [id1, id2, vencedor.id]);
         res.json({ vencedor });
     } catch (error) {
-        console.error('Erro ao simular batalha', error);
-        res.status(500).json({ message: 'Erro ao simular batalha' });
+        console.error('Erro ao batalhar', error);
+        res.status(500).json({ message: 'Erro ao batalhar' });
     }
-}
-);
+});
+
+//Rota que obtem todas as batalhas
+app.get('/batalha', async (req, res) => {
+    try {
+        const resultado = await pool.query('SELECT * FROM batalha');
+        res.json({
+            total: resultado.rowCount,
+            batalha: resultado.rows,
+        });
+    } catch (error) {
+        console.error('Erro ao obter batalhas', error);
+        res.status(500).json({ message: 'Erro ao obter as batalhas' });
+    }
+});
+
+//Buscar batalhar por herói
+app.get('/batalha/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const resultado = await pool.query('SELECT * FROM batalha WHERE id1 = $1 OR id2 = $1', [id]);
+        res.json(resultado.rows);
+    } catch (error) {
+        console.error('Erro ao obter batalhas', error);
+        res.status(500).json({ message: 'Erro ao obter as batalhas' });
+    }
+});
 
 app.get('/', (req, res) => {
     res.send('A rota está funcionando! ✨💋');
