@@ -152,20 +152,6 @@ app.get('/batalha', async (req, res) => {
     }
 });
 
-app.get('/batalha/heroi/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const resultado = await pool.query('SELECT * FROM batalha WHERE id_heroi_1 = $1 OR id_heroi_2 = $1', [id]);
-        res.json({
-            total: resultado.rowCount,
-            batalha: resultado.rows,
-        });
-    } catch (error) {
-        console.error('Erro ao obter batalhas', error);
-        res.status(500).json({ message: 'Erro ao obter as batalhas' });
-    }
-});
-
 app.get('/', (req, res) => {
     res.send('A rota está funcionando! ✨💋');
   });
