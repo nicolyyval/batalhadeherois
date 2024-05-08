@@ -13,7 +13,6 @@ const pool = new Pool({
 });
 app.use(express.json());
 
-//Rota que obtem um heroi pelo nome
 app.get('/heroi/nome/:nome', async (req, res) => {
     const { nome } = req.params;
     try {
@@ -25,7 +24,6 @@ app.get('/heroi/nome/:nome', async (req, res) => {
     }
 });
 
-//Rota que obtem todos os herois
 app.get('/heroi', async (req, res) => {
     try {
         const resultado = await pool.query('SELECT * FROM heroi');
@@ -39,7 +37,6 @@ app.get('/heroi', async (req, res) => {
     }
 });
 
-//Rota que cria um heroi
 app.post('/heroi', async (req, res) => {
     const { nome, poder, level, hp } = req.body;
     try {
@@ -54,7 +51,6 @@ app.post('/heroi', async (req, res) => {
     }
 });
 
-//Rotas que obtem um heroi pelo id
 app.get('/heroi/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -66,7 +62,6 @@ app.get('/heroi/:id', async (req, res) => {
     }
 });
 
-//Rota que atualiza um heroi
 app.put('/heroi/:id', async (req, res) => {
     const { id } = req.params;
     const { nome, poder, level, hp } = req.body;
@@ -82,7 +77,6 @@ app.put('/heroi/:id', async (req, res) => {
     }
 });
 
-//Rota que deleta um heroi
 app.delete('/heroi/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -96,12 +90,11 @@ app.delete('/heroi/:id', async (req, res) => {
 
 //Rota de batalha entre dois herois
 app.get('/batalha/:id_heroi_1/:id_heroi_2', async (req, res) => {
-    const { id_heroi_1, id_heroi_2 } = req.query;
+    const { id_heroi_1, id_heroi_2 } = req.params; // Corrigido para req.params
     try {
-        const resultado1 = await pool.query('SELECT * FROM heroi WHERE id = $1', [id_heroi_1]);
-        const resultado2 = await pool.query('SELECT * FROM heroi WHERE id = $1', [id_heroi_2]);
-        const heroi1 = resultado1.rows[0];
-        const heroi2 = resultado2.rows[0];
+        const queryheroi = 'SELECT * FROM heroi WHERE id = $1';
+        const heroi1 = (await pool.query(queryheroi, [id_heroi_1])).rows[0]; // Corrigido para .rows[0]
+        const heroi2 = (await pool.query(queryheroi, [id_heroi_2])).rows[0]; // Corrigido para .rows[0]
         console.log(heroi1);
         console.log(heroi2);
         let vencedor = 0;
@@ -119,6 +112,7 @@ app.get('/batalha/:id_heroi_1/:id_heroi_2', async (req, res) => {
     }
 });
 
+
 app.get('/batalha/heroi/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -133,7 +127,7 @@ app.get('/batalha/heroi/:id', async (req, res) => {
     }
 });
 
-//histórico de batalhas com os dados dos heróis envolvidos.
+
 app.get('/batalha/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -145,10 +139,23 @@ app.get('/batalha/:id', async (req, res) => {
     }
 });
 
-//Rota que obtem todas as batalhas
 app.get('/batalha', async (req, res) => {
     try {
         const resultado = await pool.query('SELECT * FROM batalha');
+        res.json({
+            total: resultado.rowCount,
+            batalha: resultado.rows,
+        });
+    } catch (error) {
+        console.error('Erro ao obter batalhas', error);
+        res.status(500).json({ message: 'Erro ao obter as batalhas' });
+    }
+});
+
+app.get('/batalha/heroi/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const resultado = await pool.query('SELECT * FROM batalha WHERE id_heroi_1 = $1 OR id_heroi_2 = $1', [id]);
         res.json({
             total: resultado.rowCount,
             batalha: resultado.rows,
